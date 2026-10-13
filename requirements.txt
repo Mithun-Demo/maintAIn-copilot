@@ -9,3 +9,4 @@ scikit-learn
 pypdf
 streamlit
 pydantic
+langchain-ollama

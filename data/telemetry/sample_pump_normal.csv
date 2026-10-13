@@ -1,0 +1,5 @@
+
+timestamp,equipment_id,temperature_c,vibration_mm_s,pressure_bar,rpm
+2026-10-13T09:00:00,PUMP-02,60,2.0,4.8,1480
+2026-10-13T09:05:00,PUMP-02,61,2.1,4.8,1481
+2026-10-13T09:10:00,PUMP-02,62,2.2,4.9,1480

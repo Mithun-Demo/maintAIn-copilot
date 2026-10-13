@@ -1,0 +1,67 @@
+
+[
+  {
+    "case_id": "HF-001",
+    "equipment_type": "centrifugal_pump",
+    "symptoms": [
+      "high vibration",
+      "rising temperature",
+      "unusual noise"
+    ],
+    "possible_cause": "Bearing wear or bearing lubrication problem",
+    "recommended_checks": [
+      "Inspect bearing condition",
+      "Check lubrication level and condition",
+      "Review vibration measurements"
+    ],
+    "source_type": "synthetic_demo_record"
+  },
+  {
+    "case_id": "HF-002",
+    "equipment_type": "centrifugal_pump",
+    "symptoms": [
+      "high temperature",
+      "reduced flow",
+      "low discharge pressure"
+    ],
+    "possible_cause": "Flow restriction or operating condition issue",
+    "recommended_checks": [
+      "Check suction and discharge lines",
+      "Verify operating flow rate",
+      "Inspect filters and strainers"
+    ],
+    "source_type": "synthetic_demo_record"
+  },
+  {
+    "case_id": "HF-003",
+    "equipment_type": "centrifugal_pump",
+    "symptoms": [
+      "high vibration",
+      "shaft vibration",
+      "rotating equipment noise"
+    ],
+    "possible_cause": "Misalignment or rotor imbalance",
+    "recommended_checks": [
+      "Inspect shaft alignment",
+      "Check coupling condition",
+      "Review vibration data and maintenance history"
+    ],
+    "source_type": "synthetic_demo_record"
+  },
+  {
+    "case_id": "HF-004",
+    "equipment_type": "centrifugal_pump",
+    "symptoms": [
+      "high temperature",
+      "abnormal vibration",
+      "repeated maintenance alerts"
+    ],
+    "possible_cause": "Multiple possible mechanical or operating issues",
+    "recommended_checks": [
+      "Review recent maintenance records",
+      "Check sensor calibration",
+      "Compare readings with manufacturer specifications"
+    ],
+    "source_type": "synthetic_demo_record"
+  }
+]

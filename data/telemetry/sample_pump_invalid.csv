@@ -1,0 +1,4 @@
+
+timestamp,equipment_id,temperature_c,vibration_mm_s,pressure_bar,rpm
+2026-10-13T11:00:00,PUMP-03,65,2.0,4.8,1480
+2026-10-13T11:05:00,PUMP-03,invalid,2.1,4.8,1480

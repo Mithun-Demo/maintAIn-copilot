@@ -1,24 +1,43 @@
+
 [
   {
-    "case_id": "PUMP-01-001",
-    "equipment_id": "PUMP-01",
-    "equipment_type": "Industrial pump",
-    "description": "Synthetic telemetry with rising temperature and vibration",
-    "demo_operating_limits": {
-      "temperature_c_max": 80,
-      "vibration_mm_s_max": 7.0
-    },
-    "expected_observations": [
-      "Temperature exceeds the illustrative threshold at 10:35",
-      "Vibration exceeds the illustrative threshold at 10:35",
-      "Both parameters continue increasing in subsequent readings"
-    ],
-    "possible_faults_to_investigate": [
-      "Bearing wear",
-      "Mechanical misalignment",
-      "Lubrication-related issue"
-    ],
-    "expected_caution": "Telemetry alone does not establish a confirmed root cause",
-    "data_type": "synthetic"
+    "test_id": "TC-001",
+    "description": "Detect anomalous pump readings",
+    "file_name": "sample_pump_01.csv",
+    "expected": {
+      "status": "success",
+      "flagged_reading_count": 4,
+      "temperature_exceedances": 4,
+      "vibration_exceedances": 4
+    }
+  },
+  {
+    "test_id": "TC-002",
+    "description": "Accept readings below illustrative thresholds",
+    "file_name": "sample_pump_normal.csv",
+    "expected": {
+      "status": "success",
+      "flagged_reading_count": 0,
+      "temperature_exceedances": 0,
+      "vibration_exceedances": 0
+    }
+  },
+  {
+    "test_id": "TC-003",
+    "description": "Reject invalid numeric sensor data",
+    "file_name": "sample_pump_invalid.csv",
+    "expected": {
+      "status": "error",
+      "error_type": "ValueError"
+    }
+  },
+  {
+    "test_id": "TC-004",
+    "description": "Reject an unknown telemetry filename",
+    "file_name": "missing_pump.csv",
+    "expected": {
+      "status": "error",
+      "error_type": "FileNotFoundError"
+    }
   }
 ]

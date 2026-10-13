@@ -1,0 +1,32 @@
+{
+  "passed": 4,
+  "failed": 0,
+  "total": 4,
+  "pass_rate_percent": 100.0,
+  "results": [
+    {
+      "test_id": "TC-001",
+      "description": "Detect anomalous pump readings",
+      "passed": true,
+      "details": "flagged_reading_count=PASS, temperature_exceedances=PASS, vibration_exceedances=PASS"
+    },
+    {
+      "test_id": "TC-002",
+      "description": "Accept readings below illustrative thresholds",
+      "passed": true,
+      "details": "flagged_reading_count=PASS, temperature_exceedances=PASS, vibration_exceedances=PASS"
+    },
+    {
+      "test_id": "TC-003",
+      "description": "Reject invalid numeric sensor data",
+      "passed": true,
+      "details": "Expected ValueError, received ValueError"
+    },
+    {
+      "test_id": "TC-004",
+      "description": "Reject an unknown telemetry filename",
+      "passed": true,
+      "details": "Expected FileNotFoundError, received FileNotFoundError"
+    }
+  ]
+}
