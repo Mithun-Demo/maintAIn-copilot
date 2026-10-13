@@ -1,0 +1,24 @@
+[
+  {
+    "case_id": "PUMP-01-001",
+    "equipment_id": "PUMP-01",
+    "equipment_type": "Industrial pump",
+    "description": "Synthetic telemetry with rising temperature and vibration",
+    "demo_operating_limits": {
+      "temperature_c_max": 80,
+      "vibration_mm_s_max": 7.0
+    },
+    "expected_observations": [
+      "Temperature exceeds the illustrative threshold at 10:35",
+      "Vibration exceeds the illustrative threshold at 10:35",
+      "Both parameters continue increasing in subsequent readings"
+    ],
+    "possible_faults_to_investigate": [
+      "Bearing wear",
+      "Mechanical misalignment",
+      "Lubrication-related issue"
+    ],
+    "expected_caution": "Telemetry alone does not establish a confirmed root cause",
+    "data_type": "synthetic"
+  }
+]
