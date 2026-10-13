@@ -1,0 +1,11 @@
+langchain
+langchain-community
+langchain-chroma
+chromadb
+python-dotenv
+pandas
+numpy
+scikit-learn
+pypdf
+streamlit
+pydantic
