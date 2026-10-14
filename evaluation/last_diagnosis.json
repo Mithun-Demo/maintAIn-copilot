@@ -1,0 +1,116 @@
+{
+  "equipment_id": "PUMP-01",
+  "telemetry_summary": "PUMP-01: 4 temperature readings exceeded the illustrative threshold of 80.0 °C. Flagged values: [81.0, 86.0, 89.0, 91.0]. 4 vibration readings exceeded the illustrative threshold of 7.0 mm/s. Flagged values: [7.2, 8.1, 8.6, 9.0]. These demo thresholds are not manufacturer-approved limits.",
+  "observations": [
+    {
+      "parameter": "Temperature",
+      "observed_pattern": "4 readings exceeded the illustrative threshold. Values: 81.0 °C, 86.0 °C, 89.0 °C, 91.0 °C.",
+      "supporting_readings": [
+        {
+          "timestamp": "2026-10-13T10:35:00",
+          "equipment_id": "PUMP-01",
+          "temperature_c": 81.0
+        },
+        {
+          "timestamp": "2026-10-13T10:40:00",
+          "equipment_id": "PUMP-01",
+          "temperature_c": 86.0
+        },
+        {
+          "timestamp": "2026-10-13T10:45:00",
+          "equipment_id": "PUMP-01",
+          "temperature_c": 89.0
+        },
+        {
+          "timestamp": "2026-10-13T10:50:00",
+          "equipment_id": "PUMP-01",
+          "temperature_c": 91.0
+        }
+      ],
+      "limit_comparison": "4 readings exceeded the illustrative threshold of 80.0 °C. This is not a manufacturer-approved limit.",
+      "severity": "Not assessed"
+    },
+    {
+      "parameter": "Vibration",
+      "observed_pattern": "4 readings exceeded the illustrative threshold. Values: 7.2 mm/s, 8.1 mm/s, 8.6 mm/s, 9.0 mm/s.",
+      "supporting_readings": [
+        {
+          "timestamp": "2026-10-13T10:35:00",
+          "equipment_id": "PUMP-01",
+          "vibration_mm_s": 7.2
+        },
+        {
+          "timestamp": "2026-10-13T10:40:00",
+          "equipment_id": "PUMP-01",
+          "vibration_mm_s": 8.1
+        },
+        {
+          "timestamp": "2026-10-13T10:45:00",
+          "equipment_id": "PUMP-01",
+          "vibration_mm_s": 8.6
+        },
+        {
+          "timestamp": "2026-10-13T10:50:00",
+          "equipment_id": "PUMP-01",
+          "vibration_mm_s": 9.0
+        }
+      ],
+      "limit_comparison": "4 readings exceeded the illustrative threshold of 7.0 mm/s. This is not a manufacturer-approved limit.",
+      "severity": "Not assessed"
+    }
+  ],
+  "historical_evidence": {
+    "keyword_retrieval": "{\n  \"query\": \"Pump has high vibration and increasing temperature\",\n  \"matching_method\": \"keyword_overlap\",\n  \"matches\": [\n    {\n      \"case_id\": \"HF-001\",\n      \"equipment_type\": \"centrifugal_pump\",\n      \"matched_terms\": [\n        \"and\",\n        \"high\",\n        \"temperature\",\n        \"vibration\"\n      ],\n      \"symptoms\": [\n        \"high vibration\",\n        \"rising temperature\",\n        \"unusual noise\"\n      ],\n      \"possible_cause\": \"Bearing wear or bearing lubrication problem\",\n      \"recommended_checks\": [\n        \"Inspect bearing condition\",\n        \"Check lubrication level and condition\",\n        \"Review vibration measurements\"\n      ],\n      \"source_type\": \"synthetic_demo_record\"\n    },\n    {\n      \"case_id\": \"HF-002\",\n      \"equipment_type\": \"centrifugal_pump\",\n      \"matched_terms\": [\n        \"and\",\n        \"high\",\n        \"temperature\"\n      ],\n      \"symptoms\": [\n        \"high temperature\",\n        \"reduced flow\",\n        \"low discharge pressure\"\n      ],\n      \"possible_cause\": \"Flow restriction or operating condition issue\",\n      \"recommended_checks\": [\n        \"Check suction and discharge lines\",\n        \"Verify operating flow rate\",\n        \"Inspect filters and strainers\"\n      ],\n      \"source_type\": \"synthetic_demo_record\"\n    },\n    {\n      \"case_id\": \"HF-003\",\n      \"equipment_type\": \"centrifugal_pump\",\n      \"matched_terms\": [\n        \"and\",\n        \"high\",\n        \"vibration\"\n      ],\n      \"symptoms\": [\n        \"high vibration\",\n        \"shaft vibration\",\n        \"rotating equipment noise\"\n      ],\n      \"possible_cause\": \"Misalignment or rotor imbalance\",\n      \"recommended_checks\": [\n        \"Inspect shaft alignment\",\n        \"Check coupling condition\",\n        \"Review vibration data and maintenance history\"\n      ],\n      \"source_type\": \"synthetic_demo_record\"\n    }\n  ],\n  \"note\": \"Records are synthetic demo examples. Keyword overlap does not establish causation.\"\n}",
+    "vector_retrieval": "{\n  \"query\": \"Pump has high vibration and increasing temperature\",\n  \"retrieval_method\": \"ChromaDB vector similarity\",\n  \"matches\": [\n    {\n      \"case_id\": \"HF-001\",\n      \"equipment_type\": \"centrifugal_pump\",\n      \"content\": \"Equipment type: centrifugal_pump\\nSymptoms: high vibration, rising temperature, unusual noise\\nPossible cause: Bearing wear or bearing lubrication problem\\nRecommended checks: Inspect bearing condition, Check lubrication level and condition, Review vibration measurements\",\n      \"source_type\": \"synthetic_demo_record\",\n      \"distance\": 0.3915243148803711\n    },\n    {\n      \"case_id\": \"HF-004\",\n      \"equipment_type\": \"centrifugal_pump\",\n      \"content\": \"Equipment type: centrifugal_pump\\nSymptoms: high temperature, abnormal vibration, repeated maintenance alerts\\nPossible cause: Multiple possible mechanical or operating issues\\nRecommended checks: Review recent maintenance records, Check sensor calibration, Compare readings with manufacturer specifications\",\n      \"source_type\": \"synthetic_demo_record\",\n      \"distance\": 0.4218882918357849\n    },\n    {\n      \"case_id\": \"HF-003\",\n      \"equipment_type\": \"centrifugal_pump\",\n      \"content\": \"Equipment type: centrifugal_pump\\nSymptoms: high vibration, shaft vibration, rotating equipment noise\\nPossible cause: Misalignment or rotor imbalance\\nRecommended checks: Inspect shaft alignment, Check coupling condition, Review vibration data and maintenance history\",\n      \"source_type\": \"synthetic_demo_record\",\n      \"distance\": 0.5023237466812134\n    }\n  ],\n  \"note\": \"Historical cases are synthetic demo records. Similarity is not proof of the current fault. Distance is model-dependent and is not a probability.\"\n}",
+    "data_limitation": "Historical cases are synthetic demonstration records. Retrieval similarity does not establish causation."
+  },
+  "possible_causes": [
+    {
+      "cause": "Bearing wear or bearing lubrication problem",
+      "supporting_evidence": "Current telemetry contains 4 temperature readings and 4 vibration readings above the illustrative thresholds. Synthetic historical case HF-001 describes symptoms: high vibration, rising temperature, unusual noise. The retrieved case lists 'Bearing wear or bearing lubrication problem' as a possible cause. This is a hypothesis for further investigation, not confirmation of the current fault.",
+      "confirmation_needed": "Inspect bearing condition; Check lubrication level and condition; Review vibration measurements"
+    },
+    {
+      "cause": "Misalignment or rotor imbalance",
+      "supporting_evidence": "Current telemetry contains 4 temperature readings and 4 vibration readings above the illustrative thresholds. Synthetic historical case HF-003 describes symptoms: high vibration, shaft vibration, rotating equipment noise. The retrieved case lists 'Misalignment or rotor imbalance' as a possible cause. This is a hypothesis for further investigation, not confirmation of the current fault.",
+      "confirmation_needed": "Inspect shaft alignment; Check coupling condition; Review vibration data and maintenance history"
+    }
+  ],
+  "recommended_checks": [
+    "Inspect bearing condition.",
+    "Check lubrication level and condition.",
+    "Review vibration measurements.",
+    "Inspect shaft alignment and coupling condition.",
+    "Review maintenance history and sensor calibration.",
+    "Compare measurements with manufacturer specifications."
+  ],
+  "draft_work_order": {
+    "title": "Pump telemetry inspection and maintenance review",
+    "equipment_id": "PUMP-01",
+    "reported_symptoms": [
+      "4 temperature readings exceeded the illustrative threshold of 80.0 °C; values: [81.0, 86.0, 89.0, 91.0].",
+      "4 vibration readings exceeded the illustrative threshold of 7.0 mm/s; values: [7.2, 8.1, 8.6, 9.0]."
+    ],
+    "suggested_actions": [
+      "Inspect bearing condition.",
+      "Check lubrication level and condition.",
+      "Review vibration measurements.",
+      "Inspect shaft alignment and coupling condition.",
+      "Review maintenance history and sensor calibration.",
+      "Compare measurements with manufacturer specifications."
+    ],
+    "priority": "Not assessed - requires qualified human assessment",
+    "approval_status": "Draft - requires qualified human review"
+  },
+  "missing_information": [
+    "Detailed vibration data and maintenance history",
+    "Recent maintenance records and sensor calibration data"
+  ],
+  "limitations": [
+    "Similarity in historical cases does not establish causation",
+    "Distance in vector retrieval is model-dependent and is not a probability",
+    "Historical cases are synthetic demo records and do not confirm the current fault.",
+    "Illustrative thresholds are not manufacturer-approved limits.",
+    "Vector distances are not probabilities or calibrated confidence scores."
+  ]
+}

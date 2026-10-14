@@ -1,0 +1,173 @@
+{
+  "dataset": "synthetic_demo_records",
+  "queries_evaluated": 8,
+  "keyword_hit_at_1": 1.0,
+  "vector_hit_at_1": 1.0,
+  "keyword_hit_at_3": 1.0,
+  "vector_hit_at_3": 1.0,
+  "keyword_mrr_at_3": 1.0,
+  "vector_mrr_at_3": 1.0,
+  "results": [
+    {
+      "query": "The pump is shaking and making an unfamiliar sound while getting hotter.",
+      "expected_ids": [
+        "HF-001"
+      ],
+      "keyword_top3": [
+        "HF-001",
+        "HF-002",
+        "HF-003"
+      ],
+      "keyword_relevant_rank": 1,
+      "keyword_error": null,
+      "vector_top3": [
+        "HF-001",
+        "HF-004",
+        "HF-003"
+      ],
+      "vector_relevant_rank": 1,
+      "vector_error": null
+    },
+    {
+      "query": "Could poor lubrication explain rising bearing heat and vibration?",
+      "expected_ids": [
+        "HF-001"
+      ],
+      "keyword_top3": [
+        "HF-001",
+        "HF-002",
+        "HF-003"
+      ],
+      "keyword_relevant_rank": 1,
+      "keyword_error": null,
+      "vector_top3": [
+        "HF-001",
+        "HF-004",
+        "HF-003"
+      ],
+      "vector_relevant_rank": 1,
+      "vector_error": null
+    },
+    {
+      "query": "Flow from the pump has fallen and the outlet gauge pressure is low.",
+      "expected_ids": [
+        "HF-002"
+      ],
+      "keyword_top3": [
+        "HF-002",
+        "HF-001",
+        "HF-003"
+      ],
+      "keyword_relevant_rank": 1,
+      "keyword_error": null,
+      "vector_top3": [
+        "HF-002",
+        "HF-004",
+        "HF-001"
+      ],
+      "vector_relevant_rank": 1,
+      "vector_error": null
+    },
+    {
+      "query": "The discharge side seems restricted and the pump is delivering less fluid than usual.",
+      "expected_ids": [
+        "HF-002"
+      ],
+      "keyword_top3": [
+        "HF-002",
+        "HF-001",
+        "HF-003"
+      ],
+      "keyword_relevant_rank": 1,
+      "keyword_error": null,
+      "vector_top3": [
+        "HF-002",
+        "HF-004",
+        "HF-001"
+      ],
+      "vector_relevant_rank": 1,
+      "vector_error": null
+    },
+    {
+      "query": "Rotating shaft oscillation suggests an alignment or balance problem.",
+      "expected_ids": [
+        "HF-003"
+      ],
+      "keyword_top3": [
+        "HF-003",
+        "HF-001",
+        "HF-002"
+      ],
+      "keyword_relevant_rank": 1,
+      "keyword_error": null,
+      "vector_top3": [
+        "HF-003",
+        "HF-001",
+        "HF-004"
+      ],
+      "vector_relevant_rank": 1,
+      "vector_error": null
+    },
+    {
+      "query": "Check whether coupling alignment is causing noisy vibration in rotating machinery.",
+      "expected_ids": [
+        "HF-003"
+      ],
+      "keyword_top3": [
+        "HF-003",
+        "HF-001",
+        "HF-004"
+      ],
+      "keyword_relevant_rank": 1,
+      "keyword_error": null,
+      "vector_top3": [
+        "HF-003",
+        "HF-001",
+        "HF-004"
+      ],
+      "vector_relevant_rank": 1,
+      "vector_error": null
+    },
+    {
+      "query": "Repeated equipment alerts show both overheating and vibration; sensor readings may be inaccurate.",
+      "expected_ids": [
+        "HF-004"
+      ],
+      "keyword_top3": [
+        "HF-004",
+        "HF-003",
+        "HF-001"
+      ],
+      "keyword_relevant_rank": 1,
+      "keyword_error": null,
+      "vector_top3": [
+        "HF-004",
+        "HF-001",
+        "HF-003"
+      ],
+      "vector_relevant_rank": 1,
+      "vector_error": null
+    },
+    {
+      "query": "After multiple maintenance warnings, verify instrumentation and possible operating problems.",
+      "expected_ids": [
+        "HF-004"
+      ],
+      "keyword_top3": [
+        "HF-004",
+        "HF-002",
+        "HF-003"
+      ],
+      "keyword_relevant_rank": 1,
+      "keyword_error": null,
+      "vector_top3": [
+        "HF-004",
+        "HF-001",
+        "HF-003"
+      ],
+      "vector_relevant_rank": 1,
+      "vector_error": null
+    }
+  ],
+  "limitation": "Small synthetic dataset with manually labeled queries. Results do not establish real-world industrial accuracy."
+}
