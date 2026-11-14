@@ -1,10 +1,16 @@
 
+import argparse
 import json
 from pathlib import Path
 
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_ollama import OllamaEmbeddings
+
+
+# ==================================================
+# 1. CONFIGURATION
+# ==================================================
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 
@@ -18,11 +24,16 @@ HISTORY_FILE = (
 CHROMA_DIR = PROJECT_DIR / "data" / "chroma_db"
 
 COLLECTION_NAME = "maintain_historical_failures"
+
 EMBEDDING_MODEL = "nomic-embed-text"
 
 
+# ==================================================
+# 2. LOAD HISTORICAL DOCUMENTS
+# ==================================================
+
 def load_historical_documents():
-    """Convert historical JSON records into searchable documents."""
+    """Load historical failure records as LangChain documents."""
 
     if not HISTORY_FILE.is_file():
         raise FileNotFoundError(
@@ -32,9 +43,36 @@ def load_historical_documents():
     with HISTORY_FILE.open("r", encoding="utf-8") as file:
         records = json.load(file)
 
+    if not isinstance(records, list) or not records:
+        raise ValueError(
+            "Historical dataset must contain a non-empty JSON list."
+        )
+
     documents = []
 
     for record in records:
+        if not isinstance(record, dict):
+            raise ValueError("Invalid historical record.")
+
+        required_fields = [
+            "case_id",
+            "equipment_type",
+            "symptoms",
+            "possible_cause",
+            "recommended_checks",
+            "source_type",
+        ]
+
+        missing = [
+            field for field in required_fields
+            if field not in record
+        ]
+
+        if missing:
+            raise ValueError(
+                f"Historical record is missing fields: {missing}"
+            )
+
         content = (
             f"Equipment type: {record['equipment_type']}\n"
             f"Symptoms: {', '.join(record['symptoms'])}\n"
@@ -47,26 +85,25 @@ def load_historical_documents():
             Document(
                 page_content=content,
                 metadata={
-                    "case_id": record["case_id"],
-                    "source_type": record["source_type"],
-                    "equipment_type": record["equipment_type"],
+                    "case_id": str(record["case_id"]),
+                    "source_type": str(record["source_type"]),
+                    "equipment_type": str(record["equipment_type"]),
                 },
             )
         )
 
-    if not documents:
-        raise ValueError("The historical dataset contains no records.")
-
     return documents
 
 
-def build_vector_store():
-    """Build or refresh the local ChromaDB collection."""
+# ==================================================
+# 3. CREATE THE CHROMA DATABASE CONNECTION
+# ==================================================
 
-    documents = load_historical_documents()
+def create_vector_store():
+    """Connect to the persistent ChromaDB collection."""
 
     embeddings = OllamaEmbeddings(
-        model=EMBEDDING_MODEL,
+        model=EMBEDDING_MODEL
     )
 
     vector_store = Chroma(
@@ -75,29 +112,128 @@ def build_vector_store():
         persist_directory=str(CHROMA_DIR),
     )
 
-    # This project currently uses a small, fixed demo dataset.
-    # Clear the collection so changed records are not left stale.
+    return vector_store
+
+
+# ==================================================
+# 4. REBUILD THE VECTOR INDEX
+# ==================================================
+
+def build_vector_store():
+    """
+    Force a complete rebuild of the vector index.
+
+    Use this after deliberately changing the historical dataset.
+    """
+
+    documents = load_historical_documents()
+
+    vector_store = create_vector_store()
+
     existing = vector_store.get()
     existing_ids = existing.get("ids", [])
 
     if existing_ids:
         vector_store.delete(ids=existing_ids)
 
-    vector_store.add_documents(documents)
+    document_ids = [
+        document.metadata["case_id"]
+        for document in documents
+    ]
+
+    vector_store.add_documents(
+        documents,
+        ids=document_ids,
+    )
+
+    print(
+        f"Vector index rebuilt successfully: "
+        f"{len(documents)} historical records."
+    )
 
     return vector_store
 
 
+# ==================================================
+# 5. REUSE OR SYNCHRONIZE THE PERSISTENT INDEX
+# ==================================================
+
+def get_vector_store():
+    """
+    Reuse the existing index when its documents match the dataset.
+
+    Rebuild the index only when it is empty or its records change.
+    """
+
+    documents = load_historical_documents()
+
+    vector_store = create_vector_store()
+
+    existing = vector_store.get(
+        include=["documents"]
+    )
+
+    existing_ids = existing.get("ids", [])
+    existing_documents = existing.get("documents", [])
+
+    existing_by_id = dict(
+        zip(existing_ids, existing_documents)
+    )
+
+    expected_by_id = {
+        document.metadata["case_id"]: document.page_content
+        for document in documents
+    }
+
+    if existing_by_id == expected_by_id:
+        return vector_store
+
+    print("Historical data changed or index is empty.")
+    print("Updating the ChromaDB index...")
+
+    if existing_ids:
+        vector_store.delete(ids=existing_ids)
+
+    document_ids = [
+        document.metadata["case_id"]
+        for document in documents
+    ]
+
+    vector_store.add_documents(
+        documents,
+        ids=document_ids,
+    )
+
+    print(
+        f"Vector index synchronized: "
+        f"{len(documents)} historical records."
+    )
+
+    return vector_store
+
+
+# ==================================================
+# 6. SEMANTIC VECTOR SEARCH
+# ==================================================
+
 def search_similar_cases(query: str, k: int = 3):
-    """Return historical cases most semantically similar to a query."""
+    """
+    Retrieve historical maintenance cases using vector similarity.
+
+    The persistent index is reused when it is already up to date.
+    """
 
     if not isinstance(query, str) or not query.strip():
-        raise ValueError("Search query must not be empty.")
+        raise ValueError(
+            "Search query must not be empty."
+        )
 
     if not isinstance(k, int) or isinstance(k, bool) or k < 1:
-        raise ValueError("k must be a positive integer.")
+        raise ValueError(
+            "k must be a positive integer."
+        )
 
-    vector_store = build_vector_store()
+    vector_store = get_vector_store()
 
     results = vector_store.similarity_search_with_score(
         query,
@@ -127,9 +263,41 @@ def search_similar_cases(query: str, k: int = 3):
     }
 
 
+# ==================================================
+# 7. COMMAND-LINE TEST
+# ==================================================
+
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(
+        description="MaintAIn historical vector retrieval"
+    )
+
+    parser.add_argument(
+        "--rebuild",
+        action="store_true",
+        help="Force rebuilding the ChromaDB vector index.",
+    )
+
+    args = parser.parse_args()
+
+    if args.rebuild:
+        build_vector_store()
+
+    test_query = (
+        "Pump has high vibration and increasing temperature"
+    )
+
     result = search_similar_cases(
-        "Pump has high vibration and increasing temperature",
+        test_query,
         k=3,
     )
-    print(json.dumps(result, indent=2))
+
+    print("\n=== VECTOR SEARCH RESULTS ===")
+    print(
+        json.dumps(
+            result,
+            indent=2,
+            ensure_ascii=False,
+        )
+    )

@@ -71,6 +71,11 @@
       "confirmation_needed": "Inspect bearing condition; Check lubrication level and condition; Review vibration measurements"
     },
     {
+      "cause": "Multiple possible mechanical or operating issues",
+      "supporting_evidence": "Current telemetry contains 4 temperature readings and 4 vibration readings above the illustrative thresholds. Synthetic historical case HF-004 describes symptoms: high temperature, abnormal vibration, repeated maintenance alerts. The retrieved case lists 'Multiple possible mechanical or operating issues' as a possible cause. This is a hypothesis for further investigation, not confirmation of the current fault.",
+      "confirmation_needed": "Review recent maintenance records; Check sensor calibration; Compare readings with manufacturer specifications"
+    },
+    {
       "cause": "Misalignment or rotor imbalance",
       "supporting_evidence": "Current telemetry contains 4 temperature readings and 4 vibration readings above the illustrative thresholds. Synthetic historical case HF-003 describes symptoms: high vibration, shaft vibration, rotating equipment noise. The retrieved case lists 'Misalignment or rotor imbalance' as a possible cause. This is a hypothesis for further investigation, not confirmation of the current fault.",
       "confirmation_needed": "Inspect shaft alignment; Check coupling condition; Review vibration data and maintenance history"
@@ -103,12 +108,10 @@
     "approval_status": "Draft - requires qualified human review"
   },
   "missing_information": [
-    "Detailed vibration data and maintenance history",
-    "Recent maintenance records and sensor calibration data"
+    "Manufacturer-approved operating limits and equipment specifications were not supplied.",
+    "Recent maintenance records, operating conditions, and sensor calibration results were not supplied."
   ],
   "limitations": [
-    "Similarity in historical cases does not establish causation",
-    "Distance in vector retrieval is model-dependent and is not a probability",
     "Historical cases are synthetic demo records and do not confirm the current fault.",
     "Illustrative thresholds are not manufacturer-approved limits.",
     "Vector distances are not probabilities or calibrated confidence scores."

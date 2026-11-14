@@ -103,8 +103,65 @@ model = ChatOllama(
     model="qwen2.5:3b",
     temperature=0,
     format="json",
+    num_predict=1400,
+    num_ctx=4096,
+    num_thread=4,
+    client_kwargs={
+        "timeout": 240
+    }
 )
 
+def parse_model_json(content):
+    """
+    Parse a JSON object returned by the local LLM.
+
+    Handles optional Markdown fences or explanatory text
+    surrounding the JSON object.
+    """
+
+    if not isinstance(content, str) or not content.strip():
+        raise ValueError("The AI model returned an empty response.")
+
+    content = content.strip()
+
+    # Remove optional Markdown code fences.
+    if content.startswith("```"):
+        lines = content.splitlines()
+
+        if lines and lines[0].startswith("```"):
+            lines = lines[1:]
+
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+
+        content = "\n".join(lines).strip()
+
+    # Locate the beginning of the JSON object.
+    start = content.find("{")
+
+    if start == -1:
+        raise ValueError(
+            "The AI response did not contain a JSON object."
+        )
+
+    # Parse one complete JSON object.
+    try:
+        result, _ = json.JSONDecoder().raw_decode(content[start:])
+    except json.JSONDecodeError as exc:
+        excerpt = content[max(0, exc.pos - 100):exc.pos + 150]
+
+        raise ValueError(
+            f"The AI response contained invalid or incomplete JSON. "
+            f"Parser detail: {exc}. "
+            f"Response excerpt: {excerpt!r}"
+        ) from exc
+
+    if not isinstance(result, dict):
+        raise ValueError(
+            "The AI response must be a JSON object."
+        )
+
+    return result
 
 # ============================================================
 # 4. TOOL EXECUTION
@@ -926,7 +983,7 @@ Return valid JSON only.
 
         # Parse the model's JSON.
         try:
-            generated = json.loads(final_answer)
+            generated = parse_model_json(final_answer)
         except json.JSONDecodeError as exc:
             print("\n=== OUTPUT VALIDATION ===")
             print("JSON syntax: FAIL")
